@@ -1,16 +1,18 @@
 export default {
-  	emojis:
-		"**1️⃣ Trouble With Random Non-Nitro Emojis in *Names*:**\n" +
-		"- Some emojis (eg 🐈‍⬛ 🏳️‍⚧️ 🏴‍☠️ 🏳️‍🌈) are made of two emojis and a joiner character, which discord doesn't process correctly in names. \n" +
-		"\n" +
-		"**2️⃣ Trouble With Custom/Nitro Emojis in *Names*:**\n" +
-		"- You can't put custom emojis in webhook names, just like you can't put them in usernames/user nicknames. This is discord's choice. \n" +
-		"\n" +
-		"**3️⃣ Trouble With Custom/Nitro Emojis in *Messages*:**\n" +
-		'- PK needs to have Use External Emojis permissions for proxies to use Nitro emojis. **Note this was a recent change** from `@​everyone` aka Default Permissions needing them. PK also can only use emojis it can "see", ie emojis from servers it is in. \n' +
-		"\n" +
-		"**4️⃣ Trouble With Custom/Nitro Emojis in *Fields* (ie Description and Pronouns):**\n" +
-		'- PluralKit needs to be in the server these emojis are from to be able to "see" and use them.',
+	emojis: {
+		title: "Emojis aren't working!",
+		description: "Here are a few of the common problems that we see with PluralKit and emojis:",
+		fields: [
+			{
+				name: "Custom (Discord Nitro) emoji aren't displaying!",
+				value: "To use Nitro emojis (in proxied messages, or in descriptions), **PluralKit must be in the server the emojis are from.** This is because of a change made by Discord in 2022.\n\nFor proxied messages, PluralKit must have the \"Use External Emoji\" permission in the server you're proxying in. If you're not sure if the permissions are right, you can use \`pk;debug permissions\` to find out."
+			},
+			{
+				name: "Emoji in member names / system tags look strange!",
+				value: "Some emojis (eg 🐈‍⬛ 🏳️‍⚧️ 🏴‍☠️ 🏳️‍🌈) are made of two emojis and a joiner character, which Discord doesn't process correctly in names.\n\nOther emojis, such as ☢️, won't display properly in names because they are made of a symbol character (in this example, ☢), plus a \"variation selector,\" a special character turns the preceding character into an emoji. Discord also doesn't process these correctly in names."
+			},
+		],
+	},
   	avatar:
 		"> <:myriad:610137383744176141>  PK pfp won't load?\n" +
 		"\n" +
