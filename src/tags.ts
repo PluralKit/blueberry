@@ -4,11 +4,11 @@ export default {
 		description: "Here are a few of the common problems that we see with PluralKit and emojis:",
 		fields: [
 			{
-				name: "Custom (Discord Nitro) emoji aren't displaying!",
-				value: "To use Nitro emojis (in proxied messages, or in descriptions), **PluralKit must be in the server the emojis are from.** This is because of a change made by Discord in 2022.\n\nFor proxied messages, PluralKit must have the \"Use External Emoji\" permission in the server you're proxying in. If you're not sure if the permissions are right, you can use \`pk;debug permissions\` to find out."
+				name: "1️⃣ Custom (Discord Nitro) emoji aren't displaying!",
+				value: "To use Nitro emojis (in proxied messages, or in fields like descriptions), **PluralKit must be in the server the emojis are from.** This is because of a change made by Discord in 2022.\n\nFor proxied messages, PluralKit must have the \"Use External Emoji\" permission in the server you're proxying in. If you're not sure if the permissions are right, you can use `pk;debug permissions` to find out."
 			},
 			{
-				name: "Emoji in member names / system tags look strange!",
+				name: "2️⃣ Emoji in member names / system tags look strange!",
 				value: "Some emojis (eg 🐈‍⬛ 🏳️‍⚧️ 🏴‍☠️ 🏳️‍🌈) are made of two emojis and a joiner character, which Discord doesn't process correctly in names.\n\nOther emojis, such as ☢️, won't display properly in names because they are made of a symbol character (in this example, ☢), plus a \"variation selector,\" a special character turns the preceding character into an emoji. Discord also doesn't process these correctly in names."
 			},
 		],
