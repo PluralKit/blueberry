@@ -17,20 +17,28 @@ export default {
 			},
 		],
 	},
-  	avatar:
-		"> <:myriad:610137383744176141>  PK pfp won't load?\n" +
-		"\n" +
-		"> 1️⃣  *Is Discord lagging, or its CDN acting up again?*\n" +
-		"> Are many, previously working pfps not working? Is there a delay for it showing? Check <https://discordstatus.com/> for a current known problem, take a look at the graph. Big spike = big bad. All you can do is wait about 30~60 minutes or so.\n" +
-		"\n" +
-		"> 2️⃣  *Was it deleted?*\n" +
-		"> PK pfps will no longer show after a while if you/anyone else deletes the message/channel/server where you set the image . \n" +
-		"\n" +
-		"> You can double check deletion & CDN issues by clicking on a member's avatar link in `pk;list -wa` /  `pk;list -with-avatar` -- if there's a funky error, Discord no longer has the image and PluralKit can't see it.\n" +
-		"> (Note: CDN issues usually do not show up on discordstatus.com\n" +
-		"\n" +
-		"> 3️⃣  *Resize or crop the avatar*\n" +
-		"> Oftentimes, an icon will not load because it is too big. *We recommend a size of 1000x1000 or less.* Prioritize square crops close to the face/focal point.",
+  	avatar: {
+		title: "<:myriad:610137383744176141>  PK pfp won't load?",
+		description: "Here are a few possible reasons it could be breaking:",
+		fields: [
+			{
+				name: "1️⃣  *Is Discord lagging, or its CDN acting up again?*",
+				value: "Are many previously working pfps not working? Is there a delay for it showing? Check <https://discordstatus.com/> for a current known problem, take a look at the graph. Big spike = big bad. All you can do is wait about 30~60 minutes or so."
+			},
+			{
+				name: "2️⃣  *Was it deleted?*",
+				value: "PK pfps will no longer show after a while if you/anyone else deletes the message/channel/server where you set the image.\n\n" +
+				"You can double check deletion & CDN issues by clicking on a member's avatar link in `pk;list -wa` /  `pk;list -with-avatar` -- if there's a funky error, Discord no longer has the image and PluralKit can't see it.\n" +
+				"(Note: CDN issues usually do not show up on discordstatus.com)"
+			},
+			{
+				name: "3️⃣  *Resize or crop the avatar*",
+				value: "Oftentimes, an icon will not load because it is too big. *We recommend a size of 1000x1000 or less.* Prioritize square crops close to the face/focal point.\n\n" +
+				"You can set the proxyavatar to this smaller image with `pk;member <name> proxyavatar [link|file upload]` to have the smaller one show as the icon when talking and the bigger one be on the member card.\n" +
+				"(Note: do not use the actual <>[] in the command)"
+			},
+		],
+	},
 	recovery: {
 		title: "Lost access to your PluralKit system?",
 		description: "PluralKit staff can recover your system, and link it to your current Discord account, _but only if you have your system token_. The token (from the `pk;token` command) is like a \"password\" to your PluralKit system.",
