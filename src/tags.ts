@@ -37,7 +37,7 @@ const avatar = {
 				"(Note: do not use the actual <>[] in the command)"
 		},
 	],
-},
+}
 const keepproxy =
 	"**How to automatically add text to proxied messages**\n" +
 	"-Set the message you want as the member's first/only proxy tag (must be first on the list for this to work) (You can clear a member's proxy tags with `pk;m <name> proxy clear`)\n" +
