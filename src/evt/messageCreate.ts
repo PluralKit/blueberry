@@ -18,19 +18,21 @@ export default async (evt: any, ctx: Context) => {
 	if (!evt.content) return;
 	if (evt.author.bot) return;
 	
-	if (evt.content == "?ping")
+	const content: string = evt.content.toLowerCase();
+
+	if (content == "?ping")
 	return await ctx.rest.createMessage(evt.channel_id, "meow!");
 	
 	if (evt.guild_id != config.guild_id) return;
 
-	if (["?tags", "?tag list", "?taglist"].includes(evt.content))
+	if (["?tags", "?tag list", "?taglist"].includes(content))
 		return await ctx.rest.createMessage(evt.channel_id, {
 			content: `available tags: ${Object.keys(tags).join(', ')}`,
 			allowedMentions: { parse: [] }
 		});
 
-	let tag = tags[evt.content.substring(1) as string];
-	if (evt.content && evt.content[0] == "?" && tag && evt.guild_id == config.guild_id)
+	let tag = tags[content.substring(1) as string];
+	if (content && content[0] == "?" && tag && evt.guild_id == config.guild_id)
 		return await ctx.rest.createMessage(evt.channel_id, {
 				content: (typeof tag === 'string' ? tag : undefined),
 				embeds: (typeof tag === 'string' ? undefined : [ tag ]),
@@ -41,7 +43,7 @@ export default async (evt: any, ctx: Context) => {
 				} : undefined,
 			});
 
-	if (evt.content.toLowerCase() == "?rank chat access") {
+	if (content == "?rank chat access") {
 		if (evt.guild_id != config.guild_id)
 			return;
 
@@ -99,7 +101,7 @@ export default async (evt: any, ctx: Context) => {
 		}
 	}
 
-	if (evt.content?.startsWith(".eval ") && evt.member.roles.includes(config.admin_role_id)) {
+	if (content?.startsWith(".eval ") && evt.member.roles.includes(config.admin_role_id)) {
 		let res;
 		try {
 			res = await eval(`(async () => {${evt.content.slice(5)}})()`);
