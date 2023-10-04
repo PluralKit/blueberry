@@ -46,79 +46,106 @@ const rolerestrict = {
 	}
 }
 const simplyplural = "All syncing between PluralKit and Simply Plural is handled within the SP app - PluralKit staff most likely can not help with any issues regarding Simply Plural. Please ask in their support server instead: https://discord.gg/k5Psmjv7hy"
+const recovery = {
+	title: "Lost access to your PluralKit system?",
+	description: "PluralKit staff can recover your system, and link it to your current Discord account, _but only if you have your system token_. The token (from the `pk;token` command) is like a \"password\" to your PluralKit system.",
+	fields: [
+		{
+			name: "I've got the token for my system, what do I do?",
+			value: "Ask in <#667795132971614229> for a staff member to recover your system - make sure to mention you have the token, but **do not send your token in the channel!** When a staff member is able to help you, they'll ask you to DM them your token.",
+		},
+		{
+			name: "I don't know if I have my token! Where might it be stored?",
+			value: "If you are logged into the _[PK Dashboard](<https://dash.pluralkit.me>)_: go to the Settings page of the Dashboard, and scroll to the bottom - there will be a **Recovery** section with a button to show you the token.\n\nIf you sync your PK system with _Simply Plural_: in the SP app, go to Settings, then Integrations - your PluralKit token should be in the PluralKit section there."
+		},
+		{
+			name: "I don't have my token at all, what can I do?",
+			value: "We can not accept any \"proof of ownership\" of a PluralKit system _other than a token_. \n\nIf you have any export files saved (from \`pk;export\`) then you can import those on your new account. This will create a new system with the data from that export.\nIf you don't have an export file either, the only thing you can do is query the public information from your old system, and manually copy it to a new system.",
+		},
+	],
+}
+const pktotupper =
+	"***PK to Tupper Import*** [Do Note Tupper's Current 500 Member Cap for folks new to Tupperbox]\n" +
+	"> pk;export\n" +
+	"you'll be DM'd a file & ReallyLongFileName.json\n" +
+	"*Then*\n" +
+	"> tul!import ReallyLongFileName.json\n" +
+	"OR\n" +
+	"> tul!import [attach the file like you would an image]"
+const tuppertopk =
+	"***Tupper to PK Import***\n" + "> tul!export\n" + "you'll be DM'd a file & ReallyLongFileName.json\n" + "*Then*\n" + "> pk;import ReallyLongFileName.json\n" + "OR\n" + "> pk;import [attach the file like you would an image]"
+const smartquotes =
+	'It looks like your proxy tags may have **smart quotes** in them. Smart quotes look like this: “ ”. Normal/straight quotes look like this: " ". The best solution to this is to disable "Smart Punctuation" in your phone\'s settings and reset your proxy tags to use normal quotes using `pk;member <name> proxy <new proxy tag>` (Don\'t include the <>)'
+const flags =
+	"Flags are optional words/phrases you can add to commands that start with `-`. They must go **before** any freeform search term (ie the time in `pk;sw move` and the search term in `pk;list`) \n" +
+	"\n" +
+	"You can find the list of flags at https://pluralkit.me/tips"
+const slash =
+	'Is discord "shaking" your screen when you try to use a pk member with proxy tags like `/text`?\n' +
+	"\n" +
+	"A recent change by Discord has caused these members to be unusable because Discord thinks you're trying to use a slash command. The only workaround at this time is to change the proxy tags for those members in order to continue using them. There's nothing we can do about this since it's now built into Discord. Sorry!"
+const bothelp =
+	"Please ask for help with the bot in <#667795132971614229> and help with the dashboard in <#961622977458360373>"
+const bugreport =
+	"Hi! Thanks for reporting a bug in <#635146116144431149>. However, you are missing something that is required for us to identify the issue and properly resolve it. Make sure to follow the two following points so we can best help you:\n" +
+	"\n" +
+	"- please send the error code **as text**, and *not* as a screenshot; to search pluralkit's logs, we need to be able to copy paste the error code.\n" +
+	`- Please **do** mention what you were doing at the time (even if it's "I sent a message"), it's very helpful in figuring out what the issue is.`
+const community =
+	"Please ask about community-made resources in <#912804952953479171> (it may be helpful to @mention the creator!)"
+const shards =
+	"PluralKit is in hundreds of thousands of servers, and that's too many servers for one single connection to Discord. So, it makes many separate connections to Discord and puts some servers in each one. Each connection to Discord is called a *shard*.\n" +
+	'It is possible that one shard is malfunctioning or "down". If this happens, PluralKit will be working in certain servers but not in others.'
+const messagereport =
+	"**Reporting proxied messges to Discord Trust and Safety**\n\n" +
+	"Use the standard Discord report form (<https://dis.gd/request> - select Trust and Safety and then the reason for the report). You should provide as much information as possible - including the Discord account ID of the author of the messages, and any message links.\n" +
+	"You can see what Discord account sent a proxied message by using the ❓ react, or copying a message link and running `pk;msg <link>` in DMs with PluralKit."
 
 export default {
 	emojis: emojis,
 	emoji: emojis,
 	emote: emojis,
 	emotes: emojis,
+	
 	avatar: avatar,
 	avatars: avatar,
 	icon: avatar,
 	icons: avatar,
 	pfp: avatar,
 	pfps: avatar,
-	recovery: {
-		title: "Lost access to your PluralKit system?",
-		description: "PluralKit staff can recover your system, and link it to your current Discord account, _but only if you have your system token_. The token (from the `pk;token` command) is like a \"password\" to your PluralKit system.",
-		fields: [
-			{
-				name: "I've got the token for my system, what do I do?",
-				value: "Ask in <#667795132971614229> for a staff member to recover your system - make sure to mention you have the token, but **do not send your token in the channel!** When a staff member is able to help you, they'll ask you to DM them your token.",
-			},
-			{
-				name: "I don't know if I have my token! Where might it be stored?",
-				value: "If you are logged into the _[PK Dashboard](<https://dash.pluralkit.me>)_: go to the Settings page of the Dashboard, and scroll to the bottom - there will be a **Recovery** section with a button to show you the token.\n\nIf you sync your PK system with _Simply Plural_: in the SP app, go to Settings, then Integrations - your PluralKit token should be in the PluralKit section there."
-			},
-			{
-				name: "I don't have my token at all, what can I do?",
-				value: "We can not accept any \"proof of ownership\" of a PluralKit system _other than a token_. \n\nIf you have any export files saved (from \`pk;export\`) then you can import those on your new account. This will create a new system with the data from that export.\nIf you don't have an export file either, the only thing you can do is query the public information from your old system, and manually copy it to a new system.",
-			},
-		],
-	},
-	pktotupper:
-		"***PK to Tupper Import*** [Do Note Tupper's Current 500 Member Cap for folks new to Tupperbox]\n" +
-		"> pk;export\n" +
-		"you'll be DM'd a file & ReallyLongFileName.json\n" +
-		"*Then*\n" +
-		"> tul!import ReallyLongFileName.json\n" +
-		"OR\n" +
-		"> tul!import [attach the file like you would an image]",
-	tuppertopk:
-		"***Tupper to PK Import***\n" + "> tul!export\n" + "you'll be DM'd a file & ReallyLongFileName.json\n" + "*Then*\n" + "> pk;import ReallyLongFileName.json\n" + "OR\n" + "> pk;import [attach the file like you would an image]",
+
+	recovery: recovery,
+
+	pktotupper: pktotupper,
+	tuppertopk: tuppertopk,
+
 	keepproxy: keepproxy,
 	kp: keepproxy,
-	smartquotes:
-		'It looks like your proxy tags may have **smart quotes** in them. Smart quotes look like this: “ ”. Normal/straight quotes look like this: " ". The best solution to this is to disable "Smart Punctuation" in your phone\'s settings and reset your proxy tags to use normal quotes using `pk;member <name> proxy <new proxy tag>` (Don\'t include the <>)',
+
+	smartquotes: smartquotes,
+
 	banner: banner,
 	banners: banner,
 	bannerratio: banner,
-	flags:
-		"Flags are optional words/phrases you can add to commands that start with `-`. They must go **before** any freeform search term (ie the time in `pk;sw move` and the search term in `pk;list`) \n" +
-		"\n" +
-		"You can find the list of flags at https://pluralkit.me/tips",
-	slash:
-		'Is discord "shaking" your screen when you try to use a pk member with proxy tags like `/text`?\n' +
-		"\n" +
-		"A recent change by Discord has caused these members to be unusable because Discord thinks you're trying to use a slash command. The only workaround at this time is to change the proxy tags for those members in order to continue using them. There's nothing we can do about this since it's now built into Discord. Sorry!",
-	bothelp:
-		"Please ask for help with the bot in <#667795132971614229> and help with the dashboard in <#961622977458360373>",
+
+	flags: flags,
+
+	slash: slash,
+
+	bothelp: bothelp,
+
 	restrictpk: rolerestrict,
 	rolerestrict: rolerestrict,
-	bugreport:
-		"Hi! Thanks for reporting a bug in <#635146116144431149>. However, you are missing something that is required for us to identify the issue and properly resolve it. Make sure to follow the two following points so we can best help you:\n" +
-		"\n" +
-		"- please send the error code **as text**, and *not* as a screenshot; to search pluralkit's logs, we need to be able to copy paste the error code.\n" +
-		`- Please **do** mention what you were doing at the time (even if it's "I sent a message"), it's very helpful in figuring out what the issue is.`,
-	community:
-		"Please ask about community-made resources in <#912804952953479171> (it may be helpful to @mention the creator!)",
-	shards:
-		"PluralKit is in hundreds of thousands of servers, and that's too many servers for one single connection to Discord. So, it makes many separate connections to Discord and puts some servers in each one. Each connection to Discord is called a *shard*.\n" +
-		'It is possible that one shard is malfunctioning or "down". If this happens, PluralKit will be working in certain servers but not in others.',
-	messagereport:
-		"**Reporting proxied messges to Discord Trust and Safety**\n\n" +
-		"Use the standard Discord report form (<https://dis.gd/request> - select Trust and Safety and then the reason for the report). You should provide as much information as possible - including the Discord account ID of the author of the messages, and any message links.\n" +
-		"You can see what Discord account sent a proxied message by using the ❓ react, or copying a message link and running `pk;msg <link>` in DMs with PluralKit.",
+
+	bugreport: bugreport,
+
+	community: community,
+
+	shards: shards,
+	clusters: shards,
+
+	messagereport: messagereport,
+
 	simplyplural: simplyplural,
 	sp: simplyplural,
 } as Record<string, string | object>;
