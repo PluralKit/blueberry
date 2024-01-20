@@ -4,7 +4,7 @@ const emojis = {
 	fields: [
 		{
 			name: "1️⃣ Custom (Discord Nitro) emoji aren't displaying in messages!",
-			value: "To use Nitro emojis (in proxied messages, or in fields like descriptions), **PluralKit must be in the server the emojis are from.** This is because of a change made by Discord in 2022.\n\nFor proxied messages, emojis are bugged, and so emoji permissions depend on different things for *sending* and *editing* messages.\n**Sending**: PluralKit must have the \"Use External Emoji\" permission in the server you're proxying in to use emojis while *sending* messages. If you're not sure if the permissions are right, you can use `pk;debug permissions` to find out.\n**Editing**: `@everyone` must have the \"Use External Emoji\" permission in the server you're proxying in to use emojis while *editing* messages."
+			value: "To use Nitro emojis (in proxied messages, or in fields like descriptions), **PluralKit must be in the server the emojis are from.** This is because of a change made by Discord in 2022.\n\nPluralKit must have the \"Use External Emoji\" permission in the server you're proxying in to use emojis. If you're not sure if the permissions are right, you can use `pk;debug permissions` to find out.\n\nBecause PluralKit cannot be a Twitch subscriber, it will never be able to use emojis from Twitch integrations."
 		},
 		{
 			name: "2️⃣ Custom (Discord Nitro) emoji aren't displaying in member names!",
