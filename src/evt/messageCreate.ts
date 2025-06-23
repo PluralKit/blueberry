@@ -99,7 +99,7 @@ export default async (evt: any, ctx: Context) => {
 
 		if (evt.member.roles.includes(config.chat_role_id)) {
 			let roles = evt.member.roles.filter((role: string) => role != config.chat_role_id);
-			await ctx.rest.editGuildMember(evt.guild_id, evt.author.id, { roles });
+			ctx.rest.editGuildMember(evt.guild_id, evt.author.id, { roles });
 			await ctx.rest.createMessage(evt.channel_id, {
 				content: `Removed <@&${config.chat_role_id}> from <@!${evt.author.id}>.`,
 				allowedMentions: { parse: [] },
@@ -123,7 +123,7 @@ export default async (evt: any, ctx: Context) => {
 			}
 
 			evt.member.roles.push(config.chat_role_id);
-			await ctx.rest.editGuildMember(evt.guild_id, evt.author.id, { roles: evt.member.roles });
+			ctx.rest.editGuildMember(evt.guild_id, evt.author.id, { roles: evt.member.roles });
 			await ctx.rest.createMessage(evt.channel_id, {
 				content: `Added <@&${config.chat_role_id}> to <@!${evt.author.id}>.`,
 				allowedMentions: { parse: [] },
