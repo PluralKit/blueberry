@@ -4,10 +4,11 @@ import { inspect } from 'util';
 
 import { TAGS, TAG_ALIASES } from '../tags';
 
-const isNewAccount = (createdAt: number) => {
-	const now = Math.floor((new Date() as unknown as number) / 1000);
-	if (createdAt > (now - config.newAccountDuration))
-		return true;
+const isNewAccount = (userID: string) => {
+	let createdAt = Number((BigInt(userID) >> 22n) + BigInt(1420070400000)) / 1000;
+	const now = Math.floor(Date.now() / 1000);
+	if (createdAt > (now - config.newAccountDuration)) return true;
+	return false;
 }
 
 const token: string = process.env.token!;
@@ -83,7 +84,7 @@ export default async (evt: any, ctx: Context) => {
 			await ctx.rest.createReaction(evt.channel_id, evt.id, "\u274c");
 			return;
 		}
-		if (isNewAccount(evt.member.createdAtUnix)) {
+		if (isNewAccount(evt.author.id)) {
 			await ctx.rest.createMessage(evt.channel_id, {
 				content: `\u274c Account too new. Try again in a bit!`,
 				allowedMentions: { parse: [] },
