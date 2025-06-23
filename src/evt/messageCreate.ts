@@ -93,6 +93,7 @@ export default async (evt: any, ctx: Context) => {
 					messageId: evt.id,
 				},
 			});
+			await ctx.rest.deleteMessage(evt.channel_id, evt.id);
 			return;
 		}
 
@@ -117,6 +118,7 @@ export default async (evt: any, ctx: Context) => {
 						messageId: evt.id,
 					},
 				});
+				await ctx.rest.deleteMessage(evt.channel_id, evt.id);
 				return;
 			}
 
@@ -131,6 +133,7 @@ export default async (evt: any, ctx: Context) => {
 				},
 			})
 		}
+		await ctx.rest.deleteMessage(evt.channel_id, evt.id);
 	}
 
 	if (content == ".lockchat" && evt.member.roles.includes(config.staff_role_id)) {
