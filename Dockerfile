@@ -1,6 +1,6 @@
 FROM alpine:latest AS builder
 
-RUN apk add nodejs-current yarn
+RUN apk add nodejs-current npm yarn git
 
 WORKDIR /build
 COPY src/ package.json tsconfig.json /build/
