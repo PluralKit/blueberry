@@ -1,10 +1,15 @@
 {
+  "scripts": {
+    "build": "yarn tsc",
+    "prepare": "cd ./node_modules/detritus-client-rest && npm install && npm run build"
+  },
   "dependencies": {
     "@beenotung/level-ts": "^1.15.0",
     "@types/ioredis": "^4.28.10",
     "@types/node": "^22.7.5",
     "axios": "^0.24.0",
-    "detritus-client-rest": "^0.10.5",
+    "detritus-client": "^0.16.3",
+    "detritus-client-rest": "PluralKit/detritus-client-rest",
     "detritus-client-socket": "^0.8.3",
     "ioredis": "^5.0.2",
     "ts-node": "^10.7.0",

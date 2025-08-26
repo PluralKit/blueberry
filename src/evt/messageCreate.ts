@@ -4,6 +4,13 @@ import { inspect } from 'util';
 
 import { TAGS, TAG_ALIASES } from '../tags';
 
+import * as incidentAPI from "../incidentAPI"
+import * as CV2 from "../cv2"
+import { MessageFlags } from 'detritus-client/lib/constants';
+const IS_COMPONENTS_V2 = (1 << 15);
+
+const incidentIDLen = 8;
+
 const isNewAccount = (userID: string) => {
 	let createdAt = Number((BigInt(userID) >> 22n) + BigInt(1420070400000)) / 1000;
 	const now = Math.floor(Date.now() / 1000);
@@ -42,7 +49,7 @@ const offtopicLockKey = "_offtopicLock";
 export default async (evt: any, ctx: Context) => {
 	if (!evt.content) return;
 	if (evt.author.bot) return;
-	
+
 	const content: string = evt.content.toLowerCase();
 
 	if (content == "?ping")
@@ -61,14 +68,14 @@ export default async (evt: any, ctx: Context) => {
 	let tag = TAGS[TAG_ALIASES[tagname] ?? tagname];
 	if (content && content[0] == "?" && tag)
 		return await ctx.rest.createMessage(evt.channel_id, {
-				content: (typeof tag === 'string' ? tag : undefined),
-				embeds: (typeof tag === 'string' ? undefined : [ tag ]),
-				allowedMentions: { parse: [], repliedUser: true },
-				messageReference: evt.message_reference ? {
-					channelId: evt.channel_id,
-					messageId: evt.message_reference.message_id,
-				} : undefined,
-			});
+			content: (typeof tag === 'string' ? tag : undefined),
+			embeds: (typeof tag === 'string' ? undefined : [tag]),
+			allowedMentions: { parse: [], repliedUser: true },
+			messageReference: evt.message_reference ? {
+				channelId: evt.channel_id,
+				messageId: evt.message_reference.message_id,
+			} : undefined,
+		});
 
 	if (content == "?rank chat access") {
 		if (evt.guild_id != config.guild_id)
@@ -135,7 +142,55 @@ export default async (evt: any, ctx: Context) => {
 		}
 		await ctx.rest.deleteMessage(evt.channel_id, evt.id);
 	}
-
+	if (content.startsWith("?incidents")) {
+		let subcommand = content.substring(10).trim();
+		if (subcommand == "") {
+			try {
+				const resp = await ctx.rest.createMessage(evt.channel_id, { 
+					components: await incidentAPI.genIncidentsListCV2(false), 
+					flags: IS_COMPONENTS_V2 
+				})
+				ctx.interactions.set(resp.id, {
+					ID: resp.id,
+					initiator: evt.author.id,
+					type: "incidents",
+					timestamp: resp.timestamp
+				})
+			} catch (error) {
+				console.error(error);
+				return await ctx.rest.createMessage(evt.channel_id, {
+					content: `An error occurred`,
+					messageReference: {
+						channelId: evt.channel_id,
+						messageId: evt.id,
+					},
+				});
+			}
+		}else if (subcommand == "admin" && evt.member.roles.includes(config.staff_role_id)){
+			try {
+				const resp = await ctx.rest.createMessage(evt.channel_id, {
+					components: await incidentAPI.genIncidentsListCV2(true), 
+					flags: IS_COMPONENTS_V2 
+				})
+				ctx.interactions.set(resp.id, {
+					ID: resp.id,
+					initiator: evt.author.id,
+					type: "incidents_admin",
+					timestamp: resp.timestamp
+				})
+			} catch (error) {
+				console.error(error);
+				return await ctx.rest.createMessage(evt.channel_id, {
+					content: `An error occurred`,
+					messageReference: {
+						channelId: evt.channel_id,
+						messageId: evt.id,
+					},
+				});
+			}
+		}
+	}
+	
 	if (content == ".lockchat" && evt.member.roles.includes(config.staff_role_id)) {
 		await ctx.db.level.put(offtopicLockKey, "true");
 		await ctx.rest.createMessage(evt.channel_id, "ok");

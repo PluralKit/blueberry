@@ -7,6 +7,7 @@ import Level from '@beenotung/level-ts';
 import Redis from 'ioredis';
 
 import config from './config';
+import { Interaction } from './types';
 
 const token: string = process.env.token!;
 
@@ -29,13 +30,32 @@ const ctx = { socket, rest, db: {
         return await level.get(id);
     },
     set: async (id: string, roles: string[]) => await level.put(id, roles),
-}, cache: {} };
+}, interactions: new Map<bigint, Interaction>};
 
 export interface Context {
+    socket: SocketClient,
     rest: RestClient,
 //    redis: typeof redis,
-    db: typeof ctx.db
+    db: typeof ctx.db,
+    interactions: Map<bigint, Interaction>,
 };
+
+async function cleanupInteractions(): Promise<never> {
+  while (true) {
+    try {
+        ctx.interactions.forEach(interaction => {
+            let timestamp = new Date(interaction.timestamp);
+            if (new Date().getTime() > (timestamp.getTime() + 15 * 60 * 1000))
+                ctx.interactions.delete(interaction.ID);
+        });
+    } catch (error) {
+        console.error(error);
+    }
+    
+    await new Promise(resolve => setTimeout(resolve, 60000)); // delay for 1 minute
+  }
+}
+cleanupInteractions()
 
 import evt from './evt/';
 
@@ -45,7 +65,6 @@ socket.on('packet', async ({ d: data, t, op }) => {
 
     // @ts-ignore
     else if (t in evt) await evt[t](data, ctx).catch(console.error);
-    else if (t == "INTERACTION_CREATE") console.log(JSON.stringify(data, null, 2));
     else if (!["MESSAGE_UPDATE", "MESSAGE_DELETE"].includes(t)) console.log("unhandled evt:", t);
 });
 

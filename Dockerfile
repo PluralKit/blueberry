@@ -4,7 +4,7 @@ RUN apk add nodejs-current yarn
 
 WORKDIR /build
 COPY src/ package.json tsconfig.json /build/
-RUN yarn && yarn tsc
+RUN yarn && yarn build
 
 FROM alpine:latest
 
