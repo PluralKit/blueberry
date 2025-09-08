@@ -122,7 +122,7 @@ const dmproxying =
 const cv2 =
 	"## Can't see system/member/group cards anymore?\n" +
 	"PluralKit now uses Discord's \"Components V2\" for system/member/group cards - if the cards no longer show, your Discord app is too old to show the new components, and you should update it.\n" +
-	"A **temporary** workaround to show the old version of the cards exists as the `-show-embed` (or `-ce`) flag to `pk;system` / `pk;member` / `pk;group` - however, we will be removing the old embed-based cards in the future (and as such, *we will not add a config option to always use the old cards*).\n\n" +
+	"A **temporary** workaround to show the old version of the cards exists as the `-show-embed` (or `-se`) flag to `pk;system` / `pk;member` / `pk;group` - however, we will be removing the old embed-based cards in the future (and as such, *we will not add a config option to always use the old cards*).\n\n" +
 	"**Please read the announcement post for more details:** <https://pluralkit.me/posts/2025-09-08-components-v2/>";
 
 export const TAGS: Record<string, string | object> = {
