@@ -119,6 +119,11 @@ const dmproxying =
 	"**Proxying in DMs:** " +
 	"Unfortunately, Discord DMs do not support webhooks or adding bots, which are required for PluralKit to proxy messages. " +
 	"There are some third-party bots that support this (such as [D-Proxy](<https://www.dproxy.me/>) or [/plu/ral](<https://plural.gg/>)), but they are not made by the PluralKit team so we can't provide support for them here."
+const cv2 =
+	"## Can't see system/member/group cards anymore?\n" +
+	"PluralKit now uses Discord's \"Components V2\" for system/member/group cards - if the cards no longer show, your Discord app is too old to show the new components, and you should update it.\n" +
+	"A **temporary** workaround to show the old version of the cards exists as the `-show-embed` (or `-ce`) flag to `pk;system` / `pk;member` / `pk;group` - however, we will be removing the old embed-based cards in the future (and as such, *we will not add a config option to always use the old cards*).\n\n" +
+	"**Please read the announcement post for more details:** <https://pluralkit.me/posts/2025-09-08-components-v2/>";
 
 export const TAGS: Record<string, string | object> = {
 	emojis,
@@ -140,6 +145,7 @@ export const TAGS: Record<string, string | object> = {
 	simplyplural,
 	emojiedit,
 	dmproxying,
+	cv2,
 };
 
 export const TAG_ALIASES: Record<string, string> = {
@@ -163,4 +169,8 @@ export const TAG_ALIASES: Record<string, string> = {
 	community: 'thirdparty',
 	dmproxy: 'dmproxying',
 	proxydm: 'dmproxying',
+	components: 'cv2',
+	componentsv2: 'cv2',
+	card: 'cv2',
+	cards: 'cv2',
 };
