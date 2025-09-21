@@ -15,7 +15,7 @@ const rest = new RestClient(token);
 const socket = new SocketClient(token, { 
     // intents: 5635,
     intents: 2102787,
-	presence: { activity: { type: 2, name: "vocaloid songs" } }
+	presence: { activity: { type: 3, name: "the leaves fall" }, status: "idle" }
 });
 const level = new Level<string[]>('bot.db')
 // const redis = new Redis();
