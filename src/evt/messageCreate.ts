@@ -6,7 +6,6 @@ import { TAGS, TAG_ALIASES } from '../tags';
 
 import * as incidentAPI from "../incidentAPI"
 import * as CV2 from "../cv2"
-import { MessageFlags } from 'detritus-client/lib/constants';
 const IS_COMPONENTS_V2 = (1 << 15);
 
 const incidentIDLen = 8;
@@ -190,7 +189,53 @@ export default async (evt: any, ctx: Context) => {
 			}
 		}
 	}
-	
+
+	if (content.startsWith(".hb") && evt.member.roles.includes(config.staff_role_id)) {
+		let userId;
+		const args = evt.content.slice(3).trim();
+
+		const mentionMatch = args.match(/<@!?(\d+)>/);
+		if (mentionMatch) {
+			userId = mentionMatch[1];
+		} else {
+			const idMatch = args.match(/^(\d{17,19})$/);
+			if (idMatch) {
+				userId = idMatch[1];
+			} else if (evt.message_reference) {
+				const refMessage = await ctx.rest.fetchMessage(evt.message_reference.channel_id, evt.message_reference.message_id);
+				userId = refMessage.author.id;
+			}
+		}
+
+		if (!userId) {
+			await ctx.rest.createReaction(evt.channel_id, evt.id, "\u274c");
+			return;
+		}
+
+		let user = await ctx.rest.fetchUser(userId);
+		if (!user) {
+			await ctx.rest.createReaction(evt.channel_id, evt.id, "\u274c");
+			return;
+		}
+
+		await ctx.rest.createGuildBan(evt.guild_id, userId, { deleteMessageDays: "1", reason: "hacked account" });
+		await ctx.rest.removeGuildBan(evt.guild_id, userId);
+		await ctx.rest.createMessage(config.staff_channel, {
+			allowedMentions: {},
+			content: `temp-banned account ${userId} (${user.username}) and deleted one day of messages (by <@${evt.author.id}> ${evt.author.username})`
+		});
+	}
+
+
+	if (content.startsWith(".cleanup") && evt.member.roles.includes(config.staff_role_id)) {
+		const ct = parseInt(evt.content.slice(9).trim()) + 1;
+		const messages = await ctx.rest.fetchMessages(evt.channel_id);
+		for (let i = 0; i < ct; i++) {
+			console.log(i, evt.channel_id, messages[i].id, messages[i].content)
+			await ctx.rest.deleteMessage(evt.channel_id, messages[i].id);
+		}
+	}
+
 	if (content == ".lockchat" && evt.member.roles.includes(config.staff_role_id)) {
 		await ctx.db.level.put(offtopicLockKey, "true");
 		await ctx.rest.createMessage(evt.channel_id, "ok");

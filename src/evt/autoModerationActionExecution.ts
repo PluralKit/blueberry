@@ -26,6 +26,6 @@ export default async (evt: any, ctx: Context) => {
 		  embeds: [{ description: evt.content }],
 		});
 		await ctx.db.level.put(`replymsg:${sentMessage.id}`, evt.user_id);
-		await ctx.rest.createMessage("847022163982548992", "^ the above message contained an allowed invite link and was reposted");
+		await ctx.rest.createMessage(config.staff_channel, "^ the above message contained an allowed invite link and was reposted");
 	}
 }
