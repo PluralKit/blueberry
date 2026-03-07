@@ -53,7 +53,8 @@ const rolerestrict = {
 		"text": "https://pluralkit.me/faq",
 	}
 }
-const simplyplural = "All syncing between PluralKit and Simply Plural is handled within the SP app - PluralKit staff most likely can not help with any issues regarding Simply Plural. Please ask in their support server instead: https://discord.gg/k5Psmjv7hy"
+const simplyplural = "All syncing between PluralKit and Simply Plural is handled within the SP app. PluralKit staff can not help with any issues regarding Simply Plural. Please ask in their support server instead: https://discord.gg/k5Psmjv7hy"
+const octocon = "All syncing between PluralKit and Octocon is handled within the Octocon app or bot. PluralKit staff can not help with any issues regarding Octocon. Please ask in their support server instead: https://discord.gg/octocon"
 const recovery = {
 	title: "Lost access to your PluralKit system?",
 	description: "PluralKit staff can recover your system, and link it to your current Discord account, _but only if you have your system token_. The token (from the `pk;token` command) is like a \"password\" to your PluralKit system.",
@@ -143,6 +144,7 @@ export const TAGS: Record<string, string | object> = {
 	shards,
 	messagereport,
 	simplyplural,
+	octocon,
 	emojiedit,
 	dmproxying,
 	cv2,
@@ -165,6 +167,7 @@ export const TAG_ALIASES: Record<string, string> = {
 	clusters: 'shards',
 	cluster: 'shards',
 	sp: 'simplyplural',
+	octo: 'octocon',
 	emoteedit: 'emojiedit',
 	community: 'thirdparty',
 	dmproxy: 'dmproxying',
