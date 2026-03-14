@@ -19,7 +19,8 @@ const isNewAccount = (userID: string) => {
 
 const token: string = process.env.token!;
 
-const pinnedMessageText = `<#${config.update_requests_channel}>: ask for limit raises or ID re-rolls here. **Please read the pinned messages**
+const pinnedMessageText = `<#${config.update_requests_channel}>: ask for limit raises or ID re-rolls here. **Please read the pinned messages.**
+The **default limits** are 1,000 members and 250 groups. If you haven't already, you will need to create a system with "pk;s new" before we can update any limits!
 
 If you are asking for a re-roll, *please mention the type of ID it is.*
 
