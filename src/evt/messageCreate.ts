@@ -40,7 +40,7 @@ const updatePinnedMessage = async (ctx: Context) => {
 const lockUnlockChannel = async (ctx: Context, guildId: string, channelId: string, lock: boolean) => {
 	let flags = await ctx.rest.fetchChannel(channelId).then((x: any) => x.permission_overwrites.find((o: any) => o.id == guildId).deny);
 	let operator = lock ? " | " : " & ~";
-	let deny = eval(`String(BigInt(flags) ${operator}BigInt(2048))`);
+	let deny = (`String(BigInt(flags) ${operator}BigInt(2048))`);
 	await ctx.rest.editChannelOverwrite(channelId, guildId, { deny });
 }
 
@@ -263,22 +263,6 @@ export default async (evt: any, ctx: Context) => {
 			console.log("locked", channel);
 		}
 		await ctx.rest.createMessage(evt.channel_id, "ok");
-	}
-
-	if (content?.startsWith(".eval ") && evt.member.roles.includes(config.admin_role_id)) {
-		let res;
-		try {
-			res = await eval(`(async () => {${evt.content.slice(5)}})()`);
-		} catch(e) {
-			res = (e as any).toString();
-		}
-
-		console.log("EVAL:", res);
-		let len = `${res}`.length;
-		res = inspect(res).split(token).join("[[ TOKEN ]]").slice(0, 500);
-		if (len > 500) res += "... (check console)";
-
-		await ctx.rest.createMessage(evt.channel_id, res);
 	}
 
 	if (content?.startsWith("+s") && evt.member.roles.includes(config.infra_role_id)) {
