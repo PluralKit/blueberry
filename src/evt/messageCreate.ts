@@ -40,7 +40,7 @@ const updatePinnedMessage = async (ctx: Context) => {
 const lockUnlockChannel = async (ctx: Context, guildId: string, channelId: string, lock: boolean) => {
 	let flags = await ctx.rest.fetchChannel(channelId).then((x: any) => x.permission_overwrites.find((o: any) => o.id == guildId).deny);
 	let operator = lock ? " | " : " & ~";
-	let deny = (`String(BigInt(flags) ${operator}BigInt(2048))`);
+	let deny = eval(`String(BigInt(flags) ${operator}BigInt(2048))`);
 	await ctx.rest.editChannelOverwrite(channelId, guildId, { deny });
 }
 
