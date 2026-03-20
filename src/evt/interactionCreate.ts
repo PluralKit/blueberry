@@ -183,6 +183,9 @@ async function handleModalInteraction(evt: any, ctx: Context) {
     if (!interaction) {
         return
     }
+    if (!evt.member.roles.includes(config.staff_role_id)) {
+        return;
+    }
 
     if (id == "new_incident_modal") {
         try {
@@ -311,12 +314,12 @@ export default async (evt: any, ctx: Context) => {
 
     try {
         switch (evt.type) {
-        case InteractionType.MESSAGE_COMPONENT:
-            await handleComponentInteraction(evt, ctx);
-            break;
-        case InteractionType.MODAL_SUBMIT:
-            await handleModalInteraction(evt, ctx);
-            break;
+            case InteractionType.MESSAGE_COMPONENT:
+                await handleComponentInteraction(evt, ctx);
+                break;
+            case InteractionType.MODAL_SUBMIT:
+                await handleModalInteraction(evt, ctx);
+                break;
         }
     } catch (error) {
         console.error(error);
