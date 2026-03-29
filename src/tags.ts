@@ -61,7 +61,7 @@ const recovery = {
 	fields: [
 		{
 			name: "I've got the token for my system, what do I do?",
-			value: "Ask in <#1319461648251097288> for a staff member to recover your system - make sure to mention you have the token, but **do not send your token in the channel!** When a staff member is able to help you, they'll ask you to DM them your token.",
+			value: "Ask in <#1487941036259934400> for a staff member to recover your system - make sure to mention you have the token, but **do not send your token in the main channel!** A staff member will help you when they are available.",
 		},
 		{
 			name: "I don't know if I have my token! Where might it be stored?",

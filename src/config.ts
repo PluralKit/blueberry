@@ -6,7 +6,9 @@ export default {
     staff_role_id: "913986523500777482",
     infra_role_id: "1291763746657669211",
     update_requests_channel: "1310730413211254905",
+    recovery_requests_channel: "1487941036259934400",
     staff_channel: "1211833185520844813",
+    staff_bots_channel: "888856810923110531",
 
     lockdownChannels: [
       "471385416595931176",  // #command-spam
@@ -14,6 +16,7 @@ export default {
 
       "1319461648251097288", // #bot-support
       "1310730413211254905", // #update-requests
+      "1487941036259934400", // #recovery-requests
       "961622977458360373",  // #website
       "468821582794588160",  // #suggestions-feedback
 

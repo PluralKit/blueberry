@@ -6,6 +6,8 @@ import { TAGS, TAG_ALIASES } from '../tags';
 
 import * as incidentAPI from "../incidentAPI"
 import * as CV2 from "../cv2"
+import { ChannelTypes } from 'detritus-client/lib/constants';
+import { Channel, Message } from 'detritus-client/lib/structures';
 const IS_COMPONENTS_V2 = (1 << 15);
 
 const incidentIDLen = 8;
@@ -19,7 +21,8 @@ const isNewAccount = (userID: string) => {
 
 const token: string = process.env.token!;
 
-const pinnedMessageText = `<#${config.update_requests_channel}>: ask for limit raises or ID re-rolls here. **Please read the pinned messages.**
+const pinnedMessages = new Map<string, string>([
+  [config.update_requests_channel, `<#${config.update_requests_channel}>: ask for limit raises or ID re-rolls here. **Please read the pinned messages.**
 The **default limits** are 1,000 members and 250 groups. If you haven't already, you will need to create a system with "pk;s new" before we can update any limits!
 
 If you are asking for a re-roll, *please mention the type of ID it is.*
@@ -27,14 +30,52 @@ If you are asking for a re-roll, *please mention the type of ID it is.*
 Please keep your requests to **one message**, feel free to edit it afterward. (There is a slowmode of 10 minutes in the channel, to discourage in-channel replies.)
 Staff may create a thread in case they need more information.
 
-Any other messages **will be deleted with no warning**. If you are not sure which channel to use, please read <#641807196056715294>.`;
+Any other messages **will be deleted with no warning**. If you are not sure which channel to use, please read <#641807196056715294>.
+`],
 
-const updatePinnedMessage = async (ctx: Context) => {
-	const key = "_pinnedMessageId";
+  [config.recovery_requests_channel, `# Do not send your token in this channel!
+
+<#${config.recovery_requests_channel}>: get assistance with system recovery here.
+
+When a staff member is available, they will assist you. Make sure you do not have a system currently linked to the account you are currently requesting recovery from, as we cannot link more than one system to a single Discord account.
+
+Any other messages **will be deleted with no warning**. If you are not sure which channel to use, please read <#641807196056715294>.
+`],
+]);
+
+function generateDividerGif() {
+	return Buffer.from(new Uint8Array([
+		0x47, 0x49, 0x46, 0x38, 0x39, 0x61, 
+		0xDC, 0x05, 0x08, 0x00, 0x80, 0x00, 
+		0x00, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 
+		0x00, 0x21, 0xF9, 0x04, 0x09, 0x00, 
+		0x00, 0x00, 0x00, 0x2C, 0x00, 0x00, 
+		0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 
+		0x00, 0x02, 0x02, 0x4C, 0x01, 0x00, 
+		0x3B
+	]));
+}
+
+let awaitedPins = new Map<string, boolean>(Array.from(pinnedMessages.keys()).map(key => [key, false]));
+const updatePinnedMessage = async (ctx: Context, channelId: string) => {
+	const key = `_pinnedMessageId:${channelId}`;
 	let currentMessageId = await ctx.db.maybeGetString(key);
-	let newMessage = await ctx.rest.createMessage(config.update_requests_channel, pinnedMessageText);
-	if (currentMessageId) ctx.rest.deleteMessage(config.update_requests_channel, currentMessageId);
+	let content = pinnedMessages.get(channelId);
+	let lastMessage: Message = (await ctx.rest.fetchMessages(channelId, { limit: 1 }))[0];
+	if (lastMessage && lastMessage.author.id == ctx.socket.userId) {
+		if (lastMessage.content.trim() == content?.trim()) return;
+		await ctx.rest.createMessage(channelId, {
+			components: [
+				new CV2.MediaGallery([{media: {url: "attachment://divider.gif"}}]), 
+				new CV2.Seperator({divider: true, spacing: 2})
+			],
+			flags: IS_COMPONENTS_V2,
+			file: {filename: "divider.gif", value: generateDividerGif()}
+		});
+	}
+	let newMessage = await ctx.rest.createMessage(channelId, content);
 	await ctx.db.level.put(key, newMessage.id);
+	if (currentMessageId) ctx.rest.deleteMessage(channelId, currentMessageId).catch((err) => null);
 }
 
 const lockUnlockChannel = async (ctx: Context, guildId: string, channelId: string, lock: boolean) => {
@@ -42,6 +83,55 @@ const lockUnlockChannel = async (ctx: Context, guildId: string, channelId: strin
 	let operator = lock ? " | " : " & ~";
 	let deny = eval(`String(BigInt(flags) ${operator}BigInt(2048))`);
 	await ctx.rest.editChannelOverwrite(channelId, guildId, { deny });
+}
+
+const tokenRegex = /\b[A-Za-z0-9+/]{64}\b/g;
+const createRecoveryThread = async (ctx: Context, evt: any) => {
+	if (evt.member.roles.includes(config.staff_role_id)) return;
+
+	// ... just in case
+	if (evt.content.match(tokenRegex)) {
+		await ctx.rest.deleteMessage(config.recovery_requests_channel, evt.id);
+		await ctx.rest.createMessage(config.staff_bots_channel, `<@${evt.author.id}> just posted a token-like string, please reroll.`);
+		return;
+	}
+	
+	const key = `_recoveryRequestThread:${evt.author.id}`;
+	let ids: any = await ctx.db.maybeGetString(key);
+	if (ids) {
+		ids = ids.split(":");
+		let thread = null;
+		try {
+            thread = await ctx.rest.fetchChannel(ids[1]);
+        } catch (error) {
+            await ctx.db.level.del(key);
+        }
+		if (thread) {
+			await ctx.rest.createMessage(thread.id, `<@${evt.author.id}> please contain messages to this thread. \n\n Original Message: \n>>> ${evt.content}`);
+			await ctx.rest.deleteMessage(config.recovery_requests_channel, evt.id);
+			return;
+		}
+	}
+
+	let newThread: Channel = await ctx.rest.createChannelThread(config.recovery_requests_channel, 
+	{ 
+		name: `Recovery - ${evt.author.id}`, 
+		autoArchiveDuration: 4320,
+		type: ChannelTypes.GUILD_PRIVATE_THREAD,
+		invitable: false
+	});
+	await ctx.rest.createMessage(newThread.id, `<@${evt.author.id}> please send your token in this private thread and wait for a staff member to assist you.`);
+	let threadMsg: Message = await ctx.rest.createMessage(config.recovery_requests_channel, 
+	{
+		content: `<#${newThread.id}>`,
+		messageReference: {
+            channelId: config.recovery_requests_channel,
+            guildId: config.guild_id,
+            messageId: evt.id,
+        },
+		allowedMentions: { parse: [] }
+	});
+	await ctx.db.level.put(key, `${evt.id}:${newThread.id}:${threadMsg.id}`);
 }
 
 const offtopicLockKey = "_offtopicLock";
@@ -56,7 +146,17 @@ export default async (evt: any, ctx: Context) => {
 		return await ctx.rest.createMessage(evt.channel_id, "meow!");
 
 	if (evt.guild_id != config.guild_id) return;
-	if (evt.channel_id == config.update_requests_channel) await updatePinnedMessage(ctx);
+	if (pinnedMessages.has(evt.channel_id)) {
+		if (!awaitedPins.get(evt.channel_id)) {
+			awaitedPins.set(evt.channel_id, true);
+			setTimeout(async () => {
+				await updatePinnedMessage(ctx, evt.channel_id);
+				awaitedPins.set(evt.channel_id, false);
+			}, 5000);
+		}
+	}
+
+	if (evt.channel_id == config.recovery_requests_channel) await createRecoveryThread(ctx, evt);
 
 	if (["?tags", "?tag list", "?taglist"].includes(content))
 		return await ctx.rest.createMessage(evt.channel_id, {
