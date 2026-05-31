@@ -39,6 +39,9 @@ Any other messages **will be deleted with no warning**. If you are not sure whic
 
 When a staff member is available, they will assist you. Make sure you do not have a system currently linked to the account you are currently requesting recovery from, as we cannot link more than one system to a single Discord account.
 
+**We unfortunately cannot help you if you don't have your token as it is the only proof of system ownership we can accept, alike a password.** 
+If you're logged into the [PK Dashboard](https://dash.pluralkit.me/), you can get your token from the *Recovery* section in Settings.
+
 Any other messages **will be deleted with no warning**. If you are not sure which channel to use, please read <#641807196056715294>.
 `],
 ]);
