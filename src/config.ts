@@ -7,7 +7,7 @@ export default {
     infra_role_id: "1291763746657669211",
     update_requests_channel: "1310730413211254905",
     recovery_requests_channel: "1487941036259934400",
-    staff_channel: "1211833185520844813",
+    staff_channel: "847022163982548992",
     staff_bots_channel: "888856810923110531",
 
     lockdownChannels: [
