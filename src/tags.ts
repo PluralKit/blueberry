@@ -53,7 +53,7 @@ const rolerestrict = {
 		"text": "https://pluralkit.me/faq",
 	}
 }
-const simplyplural = "All syncing between PluralKit and Simply Plural is handled within the SP app. PluralKit staff can not help with any issues regarding Simply Plural. Please ask in their support server instead: https://discord.gg/k5Psmjv7hy"
+const sync = "All syncing to/from PluralKit with third-party apps are handled by the third-party apps themselves. **PluralKit staff can not help with any issues regarding syncing or imports/exports with third-party apps.** \n Please ask in the support server of the relevant app instead."
 const octocon = "All syncing between PluralKit and Octocon is handled within the Octocon app or bot. PluralKit staff can not help with any issues regarding Octocon. Please ask in their support server instead: https://discord.gg/octocon"
 const recovery = {
 	title: "Lost access to your PluralKit system?",
@@ -65,7 +65,7 @@ const recovery = {
 		},
 		{
 			name: "I don't know if I have my token! Where might it be stored?",
-			value: "If you are logged into the _[PK Dashboard](<https://dash.pluralkit.me>)_: go to the Settings page of the Dashboard, and scroll to the bottom - there will be a **Recovery** section with a button to show you the token.\n\nIf you sync your PK system with _Simply Plural_: in the SP app, go to Settings, then Integrations - your PluralKit token should be in the PluralKit section there."
+			value: "If you are logged into the _[PK Dashboard](<https://dash.pluralkit.me>)_: go to the Settings page of the Dashboard, and scroll to the bottom - there will be a **Recovery** section with a button to show you the token."
 		},
 		{
 			name: "I don't have my token at all, what can I do?",
@@ -143,7 +143,7 @@ export const TAGS: Record<string, string | object> = {
 	thirdparty,
 	shards,
 	messagereport,
-	simplyplural,
+	sync,
 	octocon,
 	emojiedit,
 	dmproxying,
@@ -166,7 +166,6 @@ export const TAG_ALIASES: Record<string, string> = {
 	shard: 'shards',
 	clusters: 'shards',
 	cluster: 'shards',
-	sp: 'simplyplural',
 	octo: 'octocon',
 	emoteedit: 'emojiedit',
 	community: 'thirdparty',
