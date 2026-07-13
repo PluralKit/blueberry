@@ -53,8 +53,9 @@ const rolerestrict = {
 		"text": "https://pluralkit.me/faq",
 	}
 }
-const sync = "All syncing to/from PluralKit with third-party apps are handled by the third-party apps themselves. **PluralKit staff can not help with any issues regarding syncing or imports/exports with third-party apps.** \n Please ask in the support server of the relevant app instead."
+const sync = "All syncing to/from PluralKit with third-party apps are handled by the third-party apps themselves. **PluralKit staff can not help with any issues regarding syncing or imports/exports with third-party apps.** \nPlease ask in the support server of the relevant app instead."
 const octocon = "All syncing between PluralKit and Octocon is handled within the Octocon app or bot. PluralKit staff can not help with any issues regarding Octocon. Please ask in their support server instead: https://discord.gg/octocon"
+const pluralspace = "Currently, as of <t:1783967820:D>, PluralSpace does not support PluralKit import/export/sync. When it is implemented, all syncing between PluralKit and PluralSpace will be handled within the PluralSpace app. PluralKit staff can not help with any issues regarding PluralSpace. Please ask in their support server instead: https://discord.gg/pluralspace"
 const recovery = {
 	title: "Lost access to your PluralKit system?",
 	description: "PluralKit staff can recover your system, and link it to your current Discord account, _but only if you have your system token_. The token (from the `pk;token` command) is like a \"password\" to your PluralKit system.",
@@ -145,6 +146,7 @@ export const TAGS: Record<string, string | object> = {
 	messagereport,
 	sync,
 	octocon,
+        pluralspace,
 	emojiedit,
 	dmproxying,
 	cv2,
@@ -167,6 +169,7 @@ export const TAG_ALIASES: Record<string, string> = {
 	clusters: 'shards',
 	cluster: 'shards',
 	octo: 'octocon',
+        ps: 'pluralspace',
 	emoteedit: 'emojiedit',
 	community: 'thirdparty',
 	dmproxy: 'dmproxying',
