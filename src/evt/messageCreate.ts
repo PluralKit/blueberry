@@ -153,9 +153,16 @@ export default async (evt: any, ctx: Context) => {
 		if (!awaitedPins.get(evt.channel_id)) {
 			awaitedPins.set(evt.channel_id, true);
 			setTimeout(async () => {
-				await updatePinnedMessage(ctx, evt.channel_id);
-				awaitedPins.set(evt.channel_id, false);
-			}, 5000);
+        try {
+          await updatePinnedMessage(ctx, evt.channel_id);
+        } catch (error) {
+          console.error(
+            `failed to update pinned message in ${evt.channel}: ${error}`,
+          );
+        } finally {
+          awaitedPins.set(evt.channel_id, false);
+        }
+      }, 2000);
 		}
 	}
 
