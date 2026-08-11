@@ -95,7 +95,7 @@ async function handleComponentInteraction(evt: any, ctx: Context) {
         }
         try {
             await ctx.rest.createInteractionResponse(evt.id, evt.token, 9, {
-                custom_id: "new_incident_modal",
+                customId: "new_incident_modal",
                 title: "New Incident",
                 components: await incidentAPI.genIncidentModalCV2(),
             })
@@ -113,7 +113,7 @@ async function handleComponentInteraction(evt: any, ctx: Context) {
         const incidentID = id.replace("new_update_", "")
         try {
             await ctx.rest.createInteractionResponse(evt.id, evt.token, 9, {
-                custom_id: `new_update_modal_${incidentID}`,
+                customId: `new_update_modal_${incidentID}`,
                 title: "New Update",
                 components: await incidentAPI.genUpdateModalCV2(),
             })
@@ -132,7 +132,7 @@ async function handleComponentInteraction(evt: any, ctx: Context) {
         try {
             let incident = await incidentAPI.getIncident(incidentID);
             await ctx.rest.createInteractionResponse(evt.id, evt.token, 9, {
-                custom_id: `edit_incident_modal_${incidentID}`,
+                customId: `edit_incident_modal_${incidentID}`,
                 title: "Edit Incident",
                 components: await incidentAPI.genIncidentModalCV2({
                     title: incident.name,
@@ -159,7 +159,7 @@ async function handleComponentInteraction(evt: any, ctx: Context) {
         try {
             let update = await incidentAPI.getUpdate(updateID);
             await ctx.rest.createInteractionResponse(evt.id, evt.token, 9, {
-                custom_id: `edit_update_modal_${incidentID}-${updateID}`,
+                customId: `edit_update_modal_${incidentID}-${updateID}`,
                 title: "Edit Incident",
                 components: await incidentAPI.genUpdateModalCV2({
                     text: update.text,

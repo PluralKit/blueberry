@@ -9,7 +9,7 @@
     "@types/node": "^22.7.5",
     "axios": "^0.24.0",
     "detritus-client": "^0.16.3",
-    "detritus-client-rest": "PluralKit/detritus-client-rest",
+    "detritus-client-rest": "PluralKit/detritus-client-rest#0.10.6-beta",
     "detritus-client-socket": "^0.8.3",
     "ioredis": "^5.0.2",
     "ts-node": "^10.7.0",

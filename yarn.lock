@@ -217,12 +217,12 @@ denque@^2.0.1:
   resolved "https://registry.yarnpkg.com/denque/-/denque-2.0.1.tgz#bcef4c1b80dc32efe97515744f21a4229ab8934a"
   integrity sha512-tfiWc6BQLXNLpNiR5iGd0Ocu3P3VpxfzFiqubLgMfhfOw9WyvgJBd46CClNn9k3qfbjvT//0cf7AlYRX/OslMQ==
 
-detritus-client-rest@PluralKit/detritus-client-rest:
-  version "0.10.5"
-  resolved "https://codeload.github.com/PluralKit/detritus-client-rest/tar.gz/536dd923243b0dd253ecb43411e468c58f2446ac"
+detritus-client-rest@PluralKit/detritus-client-rest#0.10.6-beta:
+  version "0.11.0-beta.25"
+  resolved "https://codeload.github.com/PluralKit/detritus-client-rest/tar.gz/c00595b43fb17c5b6001abcdd833dd981a7721a1"
   dependencies:
-    detritus-rest "^0.7.0"
-    detritus-utils "^0.4.0"
+    detritus-rest "^0.9.0-beta.14"
+    detritus-utils "^0.5.0-beta.1"
 
 detritus-client-rest@^0.10.5-beta.1:
   version "0.10.5"
@@ -260,10 +260,23 @@ detritus-rest@^0.7.0:
     form-data "^3.0.0"
     node-fetch "^2.6.1"
 
+detritus-rest@^0.9.0-beta.14:
+  version "0.9.0-beta.14"
+  resolved "https://registry.yarnpkg.com/detritus-rest/-/detritus-rest-0.9.0-beta.14.tgz#ed289581d768e1e014deeda121c6cb1470cf2609"
+  integrity sha512-gk10MeoT1tfyh+XIJEHUz0f5olRzwO+U3WewSd7VpNPvbQ5/S75P3SjjluSYMNIFuxax7Yp3KZUqovAN4FY/Dg==
+  dependencies:
+    detritus-utils "^0.5.0-beta.1"
+    undici "^8.9.0"
+
 detritus-utils@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/detritus-utils/-/detritus-utils-0.4.0.tgz#42c01e029bd716c5be30a82ee4c621136f64ef35"
   integrity sha512-XO9crk1eCOecajzOg4WMsvcgXV/3GAltV0nt+kXXmglwcKyh/5DpQ7jmQ/2HycEN0dGBdgLCLPzYMxrWPN9gpw==
+
+detritus-utils@^0.5.0-beta.1:
+  version "0.5.0-beta.2"
+  resolved "https://registry.yarnpkg.com/detritus-utils/-/detritus-utils-0.5.0-beta.2.tgz#cfe39b7f4fae151cf64dc49eff3d4502788d6a86"
+  integrity sha512-gBq20DRna6huqJrvJelgiIY7b++pI8wj+fVKJSIbZ7EcNFIVWkbLMJfpRSXtml9qbN4BxeU1ujYCUtU4tbWEvg==
 
 diff@^4.0.1:
   version "4.0.2"
@@ -804,6 +817,11 @@ undici-types@~6.19.2:
   version "6.19.8"
   resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-6.19.8.tgz#35111c9d1437ab83a7cdc0abae2f26d88eda0a02"
   integrity sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==
+
+undici@^8.9.0:
+  version "8.10.0"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-8.10.0.tgz#67ed7c4087f0f40fba7bef3a46f2be80572f2473"
+  integrity sha512-HvltHd7avK13QIw/oLe4qoOLyoVSoafqJ2jYOrtMRBkbYT31eiBQ8O0ehRKZiEZCMEyLFQNIADpgCWC5fALvYQ==
 
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
